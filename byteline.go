@@ -2,10 +2,11 @@ package lineman
 
 // Интерфейс, реализующий ряд функциональных возможностей для разных типов парсеров
 type Liner interface {
-	IncPos()         // Вперёд на один символ
-	IsLetter() int   // Проверяем, является ли текущий символ буквенным и возвращаем его длину (нулевая длина - символ не является буквенным)
-	IsSpace() bool   // Проверяем, является ли символ пробельным
-	IsEndLine() bool // Проверяем, является ли символ окончанием строки
+	IncPos()                   // Вперёд на один символ
+	IsLetter() int             // Проверяем, является ли текущий символ буквенным и возвращаем его длину (нулевая длина - символ не является буквенным)
+	IsSpace() bool             // Проверяем, является ли символ пробельным
+	IsEndLine() bool           // Проверяем, является ли текущий символ окончанием строки
+	CheckEndLine(ch byte) bool // Проверя, является ли переданный символ окончанием строки
 }
 
 // Инициализирует овый обходчик массива байтов
@@ -46,6 +47,10 @@ func (s *ByteLine) IsEndLine() bool {
 		return checkEndLine(s.src[s.pos])
 	}
 	return true
+}
+
+func (s *ByteLine) CheckEndLine(ch byte) bool {
+	return checkEndLine(ch)
 }
 
 // Сдвигает позицию вперёд до первого непробельного символа
@@ -99,4 +104,12 @@ func (s *ByteLine) ForwardPos(offset int) {
 	for i := 0; i < offset; i++ {
 		s.liner.IncPos()
 	}
+}
+
+func (s *ByteLine) EndLineContent() []byte {
+	pos := s.pos
+	for pos < len(s.src) && !s.liner.IsEndLine() {
+		pos++
+	}
+	return s.src[s.pos:pos]
 }
