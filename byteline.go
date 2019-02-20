@@ -113,3 +113,13 @@ func (s *ByteLine) EndLineContent() []byte {
 	}
 	return s.src[s.pos:pos]
 }
+
+func (s *ByteLine) ToChar(ch byte) bool {
+	for !s.IsEndDocument() {
+		if s.src[s.pos] == ch {
+			return true
+		}
+		s.liner.IncPos()
+	}
+	return false
+}
