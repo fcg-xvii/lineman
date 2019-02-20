@@ -108,7 +108,7 @@ func (s *ByteLine) ForwardPos(offset int) {
 
 func (s *ByteLine) EndLineContent() []byte {
 	pos := s.pos
-	for pos < len(s.src) && !s.liner.IsEndLine() {
+	for pos < len(s.src) && !s.liner.CheckEndLine(s.src[pos]) {
 		pos++
 	}
 	return s.src[s.pos:pos]

@@ -38,7 +38,7 @@ func (s *CodeLine) IsEndLine() bool {
 }
 
 func (s *CodeLine) CheckEndLine(ch byte) bool {
-	return s.src[s.pos] == ';' || s.DocLine.CheckEndLine(ch)
+	return ch == ';' || s.DocLine.CheckEndLine(ch)
 }
 
 func (s *CodeLine) ReadName() (res []byte, check bool) {

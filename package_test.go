@@ -19,8 +19,9 @@ func TestDocLine(t *testing.T) {
 }
 
 func TestCodeLine(t *testing.T) {
-	src := []byte("   __CoolAway18  vdf")
+	src := []byte("x = 10;   __CoolAway18  vdf")
 	p := NewCodeLine(src)
+	t.Log("END_LINE_CONTENT", string(p.EndLineContent()))
 	w, _ := p.ReadNameSpaces()
 	t.Log(string(w))
 }
