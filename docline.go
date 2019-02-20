@@ -68,6 +68,20 @@ func (s *DocLine) MarkPos() (pos int) {
 	return
 }
 
+func (s *DocLine) MarkLine() (line int) {
+	if s._mark != nil {
+		line = s._mark.line
+	}
+	return
+}
+
+func (s *DocLine) MarkLinePos() (linePos int) {
+	if s._mark != nil {
+		linePos = s._mark.linePos
+	}
+	return
+}
+
 // Установка ошибки (к тексту добавляется информация о номере текущей строки и позиции)
 func (s *DocLine) InitError(text string) (err error) {
 	err = fmt.Errorf("%s [ line: %d, position: %d ]", text, s.line, s.linePos)
