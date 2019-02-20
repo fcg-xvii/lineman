@@ -34,7 +34,10 @@ func (s *CodeLine) IsSpace() bool {
 }
 
 func (s *CodeLine) IsEndLine() bool {
-	return s.src[s.pos] == ';' || s.DocLine.IsEndLine()
+	if !s.IsEndDocument() {
+		return s.src[s.pos] == ';' || CheckEndLine(s.src[s.pos])
+	}
+	return true
 }
 
 func (s *CodeLine) CheckEndLine(ch byte) bool {
