@@ -57,7 +57,7 @@ func (s *DocLine) MarkVal(rOffset int) (res []byte) {
 
 // Получение строки от установленной метки со смещением
 func (s *DocLine) MarkValString(rOffset int) string {
-	return string(s.markVal(rOffset))
+	return string(s.MarkVal(rOffset))
 }
 
 // Позиция указателя (если не установлен, будет возвращён 0)
