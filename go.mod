@@ -1,1 +1,1 @@
-module github.com/fcg-xvii/lineman.git
+module github.com/fcg-xvii/lineman
