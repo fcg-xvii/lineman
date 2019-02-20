@@ -10,19 +10,19 @@ type CodeLine struct {
 	*DocLine
 }
 
-func checkFirsNameChar(src []byte) (size int) {
+func CheckFirsNameChar(src []byte) (size int) {
 	if len(src) > 0 {
 		if src[0] == '_' {
 			size = 1
 		} else {
-			size = checkUnicodeLetter(src)
+			size = CheckUnicodeLetter(src)
 		}
 	}
 	return
 }
 
-func checkBodyNameChar(src []byte) (size int) {
-	if size = checkFirsNameChar(src); size == 0 && len(src) > 0 && checkNumber(src[0]) {
+func CheckBodyNameChar(src []byte) (size int) {
+	if size = CheckFirsNameChar(src); size == 0 && len(src) > 0 && CheckNumber(src[0]) {
 		size = 1
 	}
 	return
@@ -45,11 +45,11 @@ func (s *CodeLine) ReadName() (res []byte, check bool) {
 	if !s.IsEndDocument() {
 		s.SetupMark()
 		var size int
-		if size = checkFirsNameChar(s.src[s.pos:]); size > 0 {
+		if size = CheckFirsNameChar(s.src[s.pos:]); size > 0 {
 			s.ForwardPos(size)
 		}
 		for {
-			if size = checkBodyNameChar(s.src[s.pos:]); size > 0 {
+			if size = CheckBodyNameChar(s.src[s.pos:]); size > 0 {
 				s.ForwardPos(size)
 			} else {
 				break

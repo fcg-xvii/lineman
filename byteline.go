@@ -44,13 +44,13 @@ func (s *ByteLine) IsEndDocument() bool { return len(s.src) <= s.pos }
 // Проверка соответствия текущего символа концу документа или заверщению оператора
 func (s *ByteLine) IsEndLine() bool {
 	if !s.IsEndDocument() {
-		return checkEndLine(s.src[s.pos])
+		return CheckEndLine(s.src[s.pos])
 	}
 	return true
 }
 
 func (s *ByteLine) CheckEndLine(ch byte) bool {
-	return checkEndLine(ch)
+	return CheckEndLine(ch)
 }
 
 // Сдвигает позицию вперёд до первого непробельного символа
@@ -69,7 +69,7 @@ func (s *ByteLine) PassEndLines() {
 
 // Проверяем, является ли текущий символ буквенным и возвращает его длину (в юникоде). Нулевая длина - символ не является буквенным
 func (s *ByteLine) IsLetter() int {
-	return checkUnicodeLetter(s.src[s.pos:])
+	return CheckUnicodeLetter(s.src[s.pos:])
 }
 
 // Проверяем, является ли текущий символ пробельным
@@ -81,7 +81,7 @@ func (s *ByteLine) IsSpace() bool {
 func (s *ByteLine) ReadWord() (res []byte, check bool) {
 	pos := s.pos
 	for !s.IsEndDocument() {
-		if size := checkUnicodeLetter(s.src[s.pos:]); size > 0 {
+		if size := CheckUnicodeLetter(s.src[s.pos:]); size > 0 {
 			for i := 0; i < size; i++ {
 				s.liner.IncPos()
 			}
