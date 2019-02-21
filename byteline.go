@@ -100,12 +100,14 @@ func (s *ByteLine) ReadWordSpaces() ([]byte, bool) {
 	return s.ReadWord()
 }
 
+// Двигаемся вперёд на offset позиций
 func (s *ByteLine) ForwardPos(offset int) {
 	for i := 0; i < offset; i++ {
 		s.liner.IncPos()
 	}
 }
 
+// Взвращает срез от текущего элемента до конца строки (без сдвига позиции)
 func (s *ByteLine) EndLineContent() []byte {
 	pos := s.pos
 	for pos < len(s.src) && !s.liner.CheckEndLine(s.src[pos]) {
@@ -114,6 +116,7 @@ func (s *ByteLine) EndLineContent() []byte {
 	return s.src[s.pos:pos]
 }
 
+// Двигаемся вперёд ндо тех пор, пока не встретим ch. Если ch не встретили, вернётся false
 func (s *ByteLine) ToChar(ch byte) bool {
 	for !s.IsEndDocument() {
 		if s.src[s.pos] == ch {
@@ -122,4 +125,8 @@ func (s *ByteLine) ToChar(ch byte) bool {
 		s.liner.IncPos()
 	}
 	return false
+}
+
+func (s *ByteLine) Right() []byte {
+	return s.src[s.pos:]
 }
