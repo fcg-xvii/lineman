@@ -130,3 +130,7 @@ func (s *ByteLine) ToChar(ch byte) bool {
 func (s *ByteLine) Right() []byte {
 	return s.src[s.pos:]
 }
+
+func (s *ByteLine) Pos() int {
+	return s.pos
+}
