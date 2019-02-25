@@ -1,5 +1,7 @@
 package lineman
 
+import "bytes"
+
 // Интерфейс, реализующий ряд функциональных возможностей для разных типов парсеров
 type Liner interface {
 	IncPos()                   // Вперёд на один символ
@@ -127,10 +129,76 @@ func (s *ByteLine) ToChar(ch byte) bool {
 	return false
 }
 
-func (s *ByteLine) Right() []byte {
-	return s.src[s.pos:]
+// Возвращает срез до текущей позиции
+func (s *ByteLine) Left() (res []byte) {
+	if s.pos <= len(s.src) {
+		res = s.src[:s.pos]
+	} else {
+		return s.src
+	}
+	return
 }
 
+// Возаращает срез с текущей позиции до конца
+func (s *ByteLine) Right() (res []byte) {
+	if s.pos < len(s.src) {
+		res = s.src[s.pos:]
+	}
+	return
+}
+
+// Возвращает текущую позицию
 func (s *ByteLine) Pos() int {
 	return s.pos
+}
+
+// Возвращает длину среза контента
+func (s *ByteLine) Len() int {
+	return len(s.src)
+}
+
+// Возвращает длину среза с текущей позиции до конца
+func (s *ByteLine) LeftLen() int {
+	return len(s.src[s.pos:])
+}
+
+// Двигается врерёд до совпадения. Если совпадений до конца среза не найдено, вернёт false
+func (s *ByteLine) ToSlice(match []byte) bool {
+	if len(match) == 0 {
+		return false
+	}
+	for !s.IsEndDocument() {
+		if s.src[s.pos] == match[0] && bytes.Index(s.src[s.pos:], match) == 0 {
+			return true
+		} else {
+			s.IncPos()
+		}
+	}
+	return false
+}
+
+// Двигаемся вперед до совпадения, затем ещё вперёд на длину среза совпадения
+func (s *ByteLine) ToSlicePost(match []byte) (res bool) {
+	if res = s.ToSlice(match); res {
+		s.ForwardPos(len(match))
+	}
+	return
+}
+
+func (s *ByteLine) PosMatchSlice(match []byte) bool {
+	if len(match) == 0 {
+		return false
+	}
+	return s.src[s.pos] == match[0] && bytes.Index(s.src[s.pos:], match) == 0
+}
+
+func (s *ByteLine) MatchSliceIndexPos(match []byte) (pos int) {
+	return bytes.Index(s.src[s.pos:], match)
+}
+
+func (s *ByteLine) MatchSliceIndex(match []byte) (pos int) {
+	if pos = s.MatchSliceIndexPos(match); pos >= 0 {
+		pos += s.pos
+	}
+	return
 }

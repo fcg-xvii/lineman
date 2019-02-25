@@ -1,14 +1,17 @@
 package lineman
 
 import (
-	_ "log"
+	"log"
 	"testing"
 )
 
 func TestPassSpaces(t *testing.T) {
-	src := []byte("          ")
+	src := []byte("vdbvdhvdfvh{{1234567890")
 	p := NewByteLine(src)
-	p.PassSpaces()
+	p.ForwardPos(2)
+	log.Println(p.MatchSliceIndex([]byte("{{")))
+	log.Println(p.MatchSliceIndexPos([]byte("{{")))
+	log.Println(string(p.Right()))
 }
 
 func TestDocLine(t *testing.T) {
