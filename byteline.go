@@ -32,9 +32,18 @@ func (s *ByteLine) SetLiner(liner Liner) {
 // Сдвигает позицию вперёд на 1 символ
 func (s *ByteLine) IncPos() { s.pos++ }
 
+// Возвращает символ на текущей позиции
 func (s *ByteLine) Char() byte {
 	if s.pos < len(s.src) {
 		return s.src[s.pos]
+	} else {
+		return 0
+	}
+}
+
+func (s *ByteLine) NextChar() byte {
+	if s.pos < len(s.src)-1 {
+		return s.src[s.pos+1]
 	} else {
 		return 0
 	}
