@@ -49,6 +49,14 @@ func (s *ByteLine) NextChar() byte {
 	}
 }
 
+func (s *ByteLine) PrevChar() byte {
+	if s.pos > 0 && s.pos < len(s.src) {
+		return s.src[s.pos-1]
+	} else {
+		return 0
+	}
+}
+
 // Проверка соответствия текущей позиции концу документа
 func (s *ByteLine) IsEndDocument() bool { return len(s.src) <= s.pos }
 
