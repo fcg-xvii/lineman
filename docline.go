@@ -30,7 +30,7 @@ func (s *DocLine) IncPos() {
 		s.line++
 		s.linePos = 1
 	} else {
-		s.linePos = 1
+		s.linePos++
 	}
 }
 
