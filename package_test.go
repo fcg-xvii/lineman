@@ -9,6 +9,7 @@ func TestPassSpaces(t *testing.T) {
 	src := []byte("vdbvdhvdfvh{{1234567890")
 	p := NewByteLine(src)
 	p.ForwardPos(2)
+	log.Println(p.ToChar('t'))
 	log.Println(p.MatchSliceIndex([]byte("{{")))
 	log.Println(p.MatchSliceIndexPos([]byte("{{")))
 	log.Println(string(p.Right()))

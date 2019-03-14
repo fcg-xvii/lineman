@@ -137,7 +137,7 @@ func (s *ByteLine) EndLineContent() []byte {
 
 // Двигаемся вперёд ндо тех пор, пока не встретим ch. Если ch не встретили, вернётся false
 func (s *ByteLine) ToChar(ch byte) bool {
-	for !s.IsEndDocument() {
+	for s.pos < len(s.src)-1 {
 		if s.src[s.pos] == ch {
 			return true
 		}
