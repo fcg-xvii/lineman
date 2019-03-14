@@ -82,6 +82,14 @@ func (s *DocLine) MarkLinePos() (linePos int) {
 	return
 }
 
+func (s *DocLine) Line() int {
+	return s.line
+}
+
+func (s *DocLine) LinePos() int {
+	return s.linePos
+}
+
 // Установка ошибки (к тексту добавляется информация о номере текущей строки и позиции)
 func (s *DocLine) InitError(text string) (err error) {
 	err = fmt.Errorf("%s [ line: %d, position: %d ]", text, s.line, s.linePos)
