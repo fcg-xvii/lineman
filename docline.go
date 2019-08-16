@@ -50,7 +50,7 @@ func (s *DocLine) RollbackMark(forward int) {
 // Получение среза от установленной метки до текущей позиции со смещением
 func (s *DocLine) MarkVal(rOffset int) (res []byte) {
 	if s._mark != nil {
-		if s._mark.pos >= s.pos-rOffset {
+		if s._mark.pos < s.pos-rOffset {
 			res = s.src[s._mark.pos : s.pos-rOffset]
 		}
 	}
