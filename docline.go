@@ -51,9 +51,7 @@ func (s *DocLine) RollbackMark(forward int) {
 func (s *DocLine) MarkVal(rOffset int) (res []byte) {
 	if s._mark != nil {
 		fmt.Println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", rOffset, s._mark.pos, s.pos, s.Len())
-		if s.pos-rOffset >= s.Len() {
-			res = s.src[s._mark.pos : s.Len()-1]
-		} else {
+		if s._mark.pos > s.pos-rOffset {
 			res = s.src[s._mark.pos : s.pos-rOffset]
 		}
 	}
